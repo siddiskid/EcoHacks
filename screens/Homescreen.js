@@ -11,26 +11,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const db = firebase.firestore();
 
-const random = () => {
-  return new Promise((resolve, reject) => {
-    db.collection("Posts")
-      .get()
-      .then((querySnapshot) => {
-        let tempLst = [];
-        querySnapshot.forEach((doc) => {
-          tempLst.push(doc.data());
-          resolve(tempLst);
-        });
-      });
-  });
-};
-
-random().then((result) => {
-  console.log(result);
-});
-
 const Homescreen = ({ navigation }) => {
   const [pfpUri, setPfpUri] = React.useState(" ");
+  const [posts, setPosts] = useState([]);
 
   const db = firebase.firestore();
   const user = firebase.auth().currentUser;
@@ -44,6 +27,8 @@ const Homescreen = ({ navigation }) => {
 
     return ref1 + "/";
   };
+
+  console.log(posts);
 
   let store = firebase
     .storage()
@@ -61,14 +46,8 @@ const Homescreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.secondary }}>
       <Header navigation={navigation} />
       <ScrollView style={{ backgroundColor: colors.primary }}>
-        {/* {random().then((result) => {
-          forEach((doc) => {
-            {
-              <Post caption={doc.imageIdf} />;
-            }
-          });
-        })} */}
         <Post caption={"ehllo"} />
+        <Post />
         <Post />
       </ScrollView>
       <Footer pfpUri={pfpUri} />
